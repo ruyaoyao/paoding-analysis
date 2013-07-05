@@ -1,5 +1,3 @@
-#paoding-analysis
-
 ##Paoding分词器基于Lucene4.x
 
 原项目见 https://code.google.com/p/paoding/
