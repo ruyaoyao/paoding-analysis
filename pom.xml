@@ -10,7 +10,7 @@
 
     <packaging>jar</packaging>
 
-    <name>paoding-analysis</name>
+    <name>paoding-analysis, 基于Lucene4.x的分词器</name>
     <url>https://code.google.com/p/paoding/</url>
 
     <developers>
