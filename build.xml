@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<project name="ndetl" default="default" basedir=".">
+    <description>Builds, tests, and runs the project ndetl.</description>
+	
+	<property environment="env"/>
+
+	<property name="version" value="2.0.0.RELEASE"/>
+	<property name="project" value="ndetl"/>
+	<property name="package" value="sdyc"/>
+	<property name="domain" value="com"/>
+	<property name="author" value="ZhenQin"/>
+	<property name="vendor" value="NowladgeData"/>
+
+    <property name="src.dir" location="src/main/java"/>
+	<property name="build.dir" location="target/ant/clesses" />
+	<property name="dist.dir" location="target/dist"/>
+
+    <property name="config.dir" location="src/main/resources" />
+	<property name="doc.dir" location="target/ant/javadoc"/>
+    <property name="web.root" location="./" />
+
+    <property name="lib.dir" location="target/dependency"/>
+	<property name="test.dir" location="src/test/java"/>
+
+    <property name="client.build.dir" location="target/ant/client" />
+
+	<path id="classpath">
+		<fileset dir="${lib.dir}" includes="**/*.jar"/>
+	</path>
+	
+	<target name="makedir" description="建立文件夹">
+		<mkdir dir="${dist.dir}"/>
+		<mkdir dir="${build.dir}"/>
+        <mkdir dir="${client.build.dir}"/>
+		<mkdir dir="${lib.dir}"/>
+        <mkdir dir="${web.root}/META-INF" />
+	</target>
+	
+	<target name="compile" depends="makedir" description="编译代码">
+		<!-- 编译所有的代码,Server and client -->
+		<javac srcdir="${src.dir}" 
+			destdir="${build.dir}" 
+			encoding="UTF-8"
+			includeantruntime="no" 
+			excludes="**/test/*,**/test/bean/*,**/*.svn,*.svn"
+			includes="**/*.java"
+			source="1.6"
+			target="1.6"
+			deprecation="true" 
+			failonerror="true"
+			debug="true">
+			<classpath refid="classpath" />
+		</javac>
+		
+		<!-- 把所有文件copy到build目录 -->
+        <copy todir="${build.dir}">
+            <fileset dir="${src.dir}" includes="**/*" excludes="**/*.java" />
+        </copy>
+
+        <copy todir="${build.dir}">
+            <fileset dir="${config.dir}" includes="**/*"/>
+        </copy>
+
+        <copy todir="${client.build.dir}">
+            <fileset dir="${build.dir}" includes="com/sdyc/ndetl/model/*.class"/>
+        	<fileset dir="${build.dir}" includes="com/sdyc/ndetl/dtd/*.class"/>
+            <fileset dir="${build.dir}" includes="com/sdyc/ndetl/codec/**/*.class"/>
+            <fileset dir="${build.dir}" includes="com/sdyc/ndetl/entity/**/*.class"/>
+            <fileset dir="${build.dir}" includes="com/sdyc/ndetl/cache/**/*.class"/>
+            <fileset dir="${build.dir}" includes="com/sdyc/ndetl/link/**/*.class"/>
+            <fileset dir="${build.dir}" includes="com/sdyc/ndetl/serializer/**/*.class"/>
+            <fileset dir="${build.dir}" includes="com/sdyc/ndetl/sys/*.class"/>
+            <fileset dir="${build.dir}" includes="com/sdyc/ndetl/util/*.class"/>
+
+        </copy>
+	</target>
+	
+	<!--生成Javadoc 文档 -->
+	<target name="javadoc" description="生成Javadoc文档.">
+		<delete dir="${doc.dir}"/>
+		<mkdir dir="${doc.dir}"/>
+		<javadoc destdir="${doc.dir}" windowtitle="${project} ${version} Javadoc" use="yes"
+			linksource="no"
+            splitindex="yes"
+            encoding="UTF-8"
+			docencoding="GBK"
+            locale="zh_CN">
+			<classpath refid="classpath"/>
+			<packageset dir="${src.dir}" defaultexcludes="yes">
+				<include name="${domain}/${package}/**"/>
+			</packageset>
+		</javadoc>
+	</target>
+	
+	<target name="package" depends="compile" description="打包成Jar" >
+		<mkdir dir="${dist.dir}/${version}" />
+		<tstamp>
+			<format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss"/>
+			<format property="TIME" pattern="yyMMddHHmm"/>
+		</tstamp>
+						
+		<manifest file="${web.root}/META-INF/MANIFEST.MF">
+			<attribute name="Created-By" value="${author}"/>
+			<attribute name="Built-Date" value="${TODAY}"/>
+			<attribute name="Implementation-Title" value="${project}"/>
+			<attribute name="Implementation-Version" value="${version}"/>
+			<attribute name="Implementation-Vendor" value="${vendor}"/>
+		</manifest>
+
+        <!-- 打包所有的编译文件 -->
+		<jar jarfile="${dist.dir}/${version}/${project}-${version}.v${TIME}.jar"
+			 basedir="${build.dir}" manifest="${web.root}/META-INF/MANIFEST.MF">
+        </jar>
+
+        <jar jarfile="${dist.dir}/${version}/${project}-client-${version}.v${TIME}.jar"
+             basedir="${client.build.dir}" manifest="${web.root}/META-INF/MANIFEST.MF">
+        </jar>
+
+			
+	</target>
+	
+	<target name="destory" description="最后的清理" >
+		<delete  includeemptydirs="true">
+			<fileset dir="${build.dir}" includes="**/*" />
+            <fileset dir="${client.build.dir}" includes="**/*" />
+
+		</delete>
+	</target>
+	<target name="default" depends="package, destory">
+	
+	</target>
+</project>
