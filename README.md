@@ -45,7 +45,7 @@ Solr 4.0以上可以直接配置Lucene的Analyzer.
 
 '''xml
 &lt;fieldType name="text_general" class="solr.TextField"&gt;
-      &lt;analyzer class="org.wltea.analyzer.lucene.IKAnalyzer" /&gt;
+      &lt;analyzer class="net.paoding.analysis.analyzer.PaodingAnalyzer" /&gt;
 &lt;/fieldType&gt;
 '''
 
