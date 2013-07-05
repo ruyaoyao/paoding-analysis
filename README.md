@@ -19,6 +19,8 @@ Paoding's Knives 中文分词具有极 高效率 和 高扩展性 。引入隐�
 ----------------------！
 
 分词示例如下：
+
+
 '''
 TokenStream ts = analyzer.tokenStream("text", new StringReader(textWordFreq.getTxtText()));
 //添加工具类  注意：以下这些与之前lucene2.x版本不同的地方
