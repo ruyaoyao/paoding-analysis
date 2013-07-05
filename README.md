@@ -44,9 +44,9 @@ Solr 4.0以上可以直接配置Lucene的Analyzer.
 配置如:
 
 '''xml
-<fieldType name="text_general" class="solr.TextField">
-      <analyzer class="org.wltea.analyzer.lucene.IKAnalyzer" />
-</fieldType>
+&lt;fieldType name="text_general" class="solr.TextField"&gt;
+      &lt;analyzer class="org.wltea.analyzer.lucene.IKAnalyzer" /&gt;
+&lt;/fieldType&gt;
 '''
 
 
