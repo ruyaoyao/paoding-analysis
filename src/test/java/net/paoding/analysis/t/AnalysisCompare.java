@@ -1,7 +1,7 @@
 /**
  *
  */
-package t;
+package net.paoding.analysis.t;
 
 import java.io.StringReader;
 

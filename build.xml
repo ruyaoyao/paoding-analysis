@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<project name="ndetl" default="default" basedir=".">
+<project name="paoding-analysis" default="default" basedir=".">
     <description>Builds, tests, and runs the project ndetl.</description>
 	
 	<property environment="env"/>
 
-	<property name="version" value="2.0.0.RELEASE"/>
-	<property name="project" value="ndetl"/>
-	<property name="package" value="sdyc"/>
-	<property name="domain" value="com"/>
-	<property name="author" value="ZhenQin"/>
-	<property name="vendor" value="NowladgeData"/>
+	<property name="version" value="2.0.4"/>
+	<property name="project" value="paoding-analysis"/>
+	<property name="package" value="paoding"/>
+	<property name="domain" value="net"/>
+	<property name="author" value="LinLangyi, ZhenQin"/>
+	<property name="vendor" value="ZhenQin"/>
 
     <property name="src.dir" location="src/main/java"/>
 	<property name="build.dir" location="target/ant/clesses" />
@@ -22,8 +22,6 @@
     <property name="lib.dir" location="target/dependency"/>
 	<property name="test.dir" location="src/test/java"/>
 
-    <property name="client.build.dir" location="target/ant/client" />
-
 	<path id="classpath">
 		<fileset dir="${lib.dir}" includes="**/*.jar"/>
 	</path>
@@ -31,7 +29,6 @@
 	<target name="makedir" description="建立文件夹">
 		<mkdir dir="${dist.dir}"/>
 		<mkdir dir="${build.dir}"/>
-        <mkdir dir="${client.build.dir}"/>
 		<mkdir dir="${lib.dir}"/>
         <mkdir dir="${web.root}/META-INF" />
 	</target>
@@ -59,19 +56,6 @@
 
         <copy todir="${build.dir}">
             <fileset dir="${config.dir}" includes="**/*"/>
-        </copy>
-
-        <copy todir="${client.build.dir}">
-            <fileset dir="${build.dir}" includes="com/sdyc/ndetl/model/*.class"/>
-        	<fileset dir="${build.dir}" includes="com/sdyc/ndetl/dtd/*.class"/>
-            <fileset dir="${build.dir}" includes="com/sdyc/ndetl/codec/**/*.class"/>
-            <fileset dir="${build.dir}" includes="com/sdyc/ndetl/entity/**/*.class"/>
-            <fileset dir="${build.dir}" includes="com/sdyc/ndetl/cache/**/*.class"/>
-            <fileset dir="${build.dir}" includes="com/sdyc/ndetl/link/**/*.class"/>
-            <fileset dir="${build.dir}" includes="com/sdyc/ndetl/serializer/**/*.class"/>
-            <fileset dir="${build.dir}" includes="com/sdyc/ndetl/sys/*.class"/>
-            <fileset dir="${build.dir}" includes="com/sdyc/ndetl/util/*.class"/>
-
         </copy>
 	</target>
 	
@@ -111,19 +95,11 @@
 		<jar jarfile="${dist.dir}/${version}/${project}-${version}.v${TIME}.jar"
 			 basedir="${build.dir}" manifest="${web.root}/META-INF/MANIFEST.MF">
         </jar>
-
-        <jar jarfile="${dist.dir}/${version}/${project}-client-${version}.v${TIME}.jar"
-             basedir="${client.build.dir}" manifest="${web.root}/META-INF/MANIFEST.MF">
-        </jar>
-
-			
 	</target>
 	
 	<target name="destory" description="最后的清理" >
 		<delete  includeemptydirs="true">
 			<fileset dir="${build.dir}" includes="**/*" />
-            <fileset dir="${client.build.dir}" includes="**/*" />
-
 		</delete>
 	</target>
 	<target name="default" depends="package, destory">
