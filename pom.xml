@@ -22,16 +22,16 @@
     </developers>
 
     <properties>
-		<lucene.version>4.2.1</lucene.version>
+        <lucene.version>4.2.1</lucene.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>GBK</project.reporting.outputEncoding>
 
         <vendor.name>ZhenQin</vendor.name>
-        <verdor.domain>http://www.nowledgedata.com.cn/</verdor.domain>
+        <verdor.domain>http://my.oschina.net/zhzhenqin/home</verdor.domain>
 
         <tomcat.home>/home/zhenqin/software/apache-tomcat-6.0.35</tomcat.home>
-        <java.main.class>com.sdyc.ndetl.sys.Launcher</java.main.class>
+        <java.main.class>net.paoding.analysis.analyzer.PaodingAnalyzer</java.main.class>
     </properties>
 
     <dependencies>
@@ -42,11 +42,11 @@
         </dependency>
 
         <!-- Lucene Lib and Dependencies -->
-		<dependency>
-			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-core</artifactId>
-			<version>${lucene.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.lucene</groupId>
@@ -54,17 +54,17 @@
             <version>${lucene.version}</version>
         </dependency>
         
-		<dependency>
-			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-queries</artifactId>
-			<version>${lucene.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>jakarta-regexp</groupId>
-					<artifactId>jakarta-regexp</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-queries</artifactId>
+            <version>${lucene.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>jakarta-regexp</groupId>
+                    <artifactId>jakarta-regexp</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
 
         <dependency>
