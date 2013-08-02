@@ -17,9 +17,7 @@ import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
  */
 public class AnalysisCompare {
 
-    protected Analyzer analyzerA = null;
-
-    protected StringBuilder sb = null;
+    protected Analyzer analyzer = null;
 
     private StringBuilder analyzerStr = new StringBuilder();
     /**
@@ -30,37 +28,31 @@ public class AnalysisCompare {
     }
 
     public void dissectA() {
-        sb = new StringBuilder();
         long time = System.currentTimeMillis();
         try {
-            TokenStream ts = analyzerA.tokenStream("text", new StringReader(analyzerStr.toString()));
+            TokenStream ts = analyzer.tokenStream("text", new StringReader(analyzerStr.toString()));
             //添加工具类  注意：以下这些与之前lucene2.x版本不同的地方
 //			Token termAtt  = (Token)ts.addAttribute(
 //					Token.class);
             CharTermAttribute offAtt  = (CharTermAttribute)ts.addAttribute(CharTermAttribute.class);
             // 循环打印出分词的结果，及分词出现的位置
             while(ts.incrementToken()){
-                sb.append(offAtt.toString());
-                sb.append("|");
-//	        	sb.append("(");
-//                sb.append(offAtt.startOffset());
-//	        	sb.append(" ");
-//	        	sb.append(offAtt.endOffset());
-//	        	sb.append(")");
+                System.out.print(offAtt.toString() + " ");
             }
+            System.out.println();
             System.out.println("Time: " + (System.currentTimeMillis() - time));
-            System.out.println(sb);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public Analyzer getAnalyzerA() {
-        return analyzerA;
+    public Analyzer getAnalyzer() {
+        return analyzer;
     }
 
-    public void setAnalyzerA(Analyzer analyzerA) {
-        this.analyzerA = analyzerA;
+    public void setAnalyzer(Analyzer analyzer) {
+        this.analyzer = analyzer;
     }
 
     public void setAnalyzerStr(StringBuilder analyzerStr) {
@@ -76,7 +68,7 @@ public class AnalysisCompare {
     }
 
     public void setUp(){
-        setAnalyzerA(new net.paoding.analysis.analyzer.PaodingAnalyzer());
+        setAnalyzer(new net.paoding.analysis.analyzer.PaodingAnalyzer());
 		addStr("非关系数据库 财经郎眼");
 		addStr("汉文化和服装 汉文化");
 //		addStr("醍醐灌顶恍然大悟柳暗花明");

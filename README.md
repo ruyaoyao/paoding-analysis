@@ -32,11 +32,11 @@ Paoding's Knives 中文分词具有极 高效率 和 高扩展性 。引入隐�
 
 项目默认可以使用Maven直接编译.
 
-如果使用Ant,可把依赖的lib放入 '{pro_workspace}/target/dependency/' 下. 然后使用ant可以直接编译.
-编译的结果存放在 '{pro_workspace}/target/dist/{version}/' 下
+如果使用Ant,可把依赖的lib放入 {pro_workspace}/target/dependency/ 下. 然后使用ant可以直接编译.
+编译的结果存放在 {pro_workspace}/target/dist/{version}/ 下
 
 
-可使用Maven的 'copy-dependencies' 命令直接copy依赖到{pro_workspace}/target/dependency/，然后使用ant编译
+可使用Maven的 copy-dependencies 命令直接copy依赖到{pro_workspace}/target/dependency/，然后使用ant编译
 
 
     mvn dependency：copy-dependencies
