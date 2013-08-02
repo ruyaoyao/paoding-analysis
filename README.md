@@ -19,7 +19,7 @@ Paoding's Knives 中文分词具有极 高效率 和 高扩展性 。引入隐�
 分词示例如下：
 
 
-    TokenStream ts = analyzer.tokenStream("text", new StringReader(textWordFreq.getTxtText()));
+    TokenStream ts = analyzer.tokenStream("text", new StringReader(text));
     //添加工具类  注意：以下这些与之前lucene2.x版本不同的地方
     CharTermAttribute offAtt = (CharTermAttribute) ts.addAttribute(CharTermAttribute.class);
     // 循环打印出分词的结果，及分词出现的位置
@@ -44,11 +44,11 @@ Paoding's Knives 中文分词具有极 高效率 和 高扩展性 。引入隐�
 
 #Solr4.x使用说明
 
-Solr 4.0以上可以直接配置Lucene的Analyzer.
+Solr 4.x以上可以直接配置Lucene的Analyzer.
 配置如:
 
 
-    &lt;fieldType name="text_general" class="solr.TextField"&gt;
-      &lt;analyzer class="net.paoding.analysis.analyzer.PaodingAnalyzer" /&gt;
-    &lt;/fieldType&gt;
+    <fieldType name="text_general" class="solr.TextField">
+      <analyzer class="net.paoding.analysis.analyzer.PaodingAnalyzer" />
+    </fieldType>
 
