@@ -1,4 +1,4 @@
-##Paoding分词器基于Lucene4.x
+#Paoding分词器基于Lucene4.x
 
 原项目见 https://code.google.com/p/paoding/
 
@@ -35,6 +35,13 @@ while (ts.incrementToken()) {
 
 如果使用Ant,可把依赖的lib放入{pro_workspace}/target/dependency/下. 然后使用ant可以直接编译.
 编译的结果存放在{pro_workspace}/target/dist/{version}/下
+
+
+可使用Maven的copy-dependencies命令直接copy依赖到{pro_workspace}/target/dependency/，然后使用ant编译
+
+
+mvn dependency：copy-dependencies
+
 
 #Solr4.x使用说明
 
