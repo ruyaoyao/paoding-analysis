@@ -12,6 +12,7 @@ import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.store.Directory;
@@ -43,8 +44,9 @@ public class InMemoryShortExample {
             writer.commit();
 
             IndexSearcher searcher = new IndexSearcher(DirectoryReader.open(idx));
-            Assert.assertTrue(searcher.search(new MatchAllDocsQuery(), 10).totalHits > 0);
-		} catch (IOException ioe) {
+            Assert.assertTrue(searcher.search(new QueryParser(Version.LUCENE_46,
+                    "title", ANALYZER).parse("title:'维基'"), 10).totalHits > 0);
+		} catch (Exception ioe) {
 			// In this example we aren't really doing an I/O, so this
 			// exception should never actually be thrown.
 			ioe.printStackTrace();

@@ -1,8 +1,13 @@
 package net.paoding.analysis.t;
 
+import net.paoding.analysis.analyzer.PaodingAnalyzer;
 import net.paoding.analysis.analyzer.PaodingTokenizer;
 import net.paoding.analysis.analyzer.impl.MaxWordLengthTokenCollector;
 import net.paoding.analysis.knife.Paoding;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.util.Version;
 import org.junit.Test;
 
 import java.io.StringReader;
@@ -22,8 +27,9 @@ import java.io.StringReader;
  */
 public class SplitTest {
 
+    Analyzer ANALYZER = new PaodingAnalyzer();
+
     public SplitTest() {
-        //org.apache.lucene.index.FieldInvertState
     }
 
 
@@ -36,6 +42,14 @@ public class SplitTest {
                 new MaxWordLengthTokenCollector());
 
         System.out.println(tokenizer);
+    }
 
+
+    @Test
+    public void testParse() throws Exception {
+        Query query = new QueryParser(Version.LUCENE_46,
+                "title", ANALYZER).parse("title:汉文化");
+
+        System.out.println(query);
     }
 }

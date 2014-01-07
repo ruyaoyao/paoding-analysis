@@ -25,6 +25,7 @@ import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
+import org.apache.lucene.util.BytesRef;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -96,7 +97,7 @@ public final class PaodingTokenizer extends Tokenizer implements Collector {
 	private Knife knife;
 
 	/**
-	 * 
+	 * 切分句子后在这里保存所有的词
 	 */
 	private TokenCollector tokenCollector;
 
@@ -113,7 +114,6 @@ public final class PaodingTokenizer extends Tokenizer implements Collector {
 	private CharTermAttribute termAtt;
 	private OffsetAttribute offsetAtt;
     private PositionIncrementAttribute positionIncrementAttribute;
-	//private TypeAttribute typeAtt;
 
 	// -------------------------------------------------
 
@@ -204,9 +204,10 @@ public final class PaodingTokenizer extends Tokenizer implements Collector {
             Token token = tokenIteractor.next();
             termAtt.setEmpty();
             termAtt.append(token);
-            positionIncrementAttribute.setPositionIncrement(token.endOffset());
             offsetAtt.setOffset(correctOffset(token.startOffset()),
                     correctOffset(token.endOffset()));
+            positionIncrementAttribute.setPositionIncrement(token.endOffset());
+            return true;
         }
 		return tokenIteractor.hasNext();
 	}
