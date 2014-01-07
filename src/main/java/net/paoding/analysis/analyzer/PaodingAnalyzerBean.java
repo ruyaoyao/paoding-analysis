@@ -32,7 +32,7 @@ public class PaodingAnalyzerBean extends Analyzer {
 	/**
 	 * 用于向PaodingTokenizer提供，分解文本字符
 	 * 
-	 * @see PaodingTokenizer#next()
+	 * @see net.paoding.analysis.analyzer.PaodingTokenizer#incrementToken()
 	 * 
 	 */
 	private Knife knife;
@@ -44,7 +44,7 @@ public class PaodingAnalyzerBean extends Analyzer {
 	private int mode = MOST_WORDS_MODE;
 
 	/**
-	 * 
+	 * 反射执行默认构造方法
 	 */
 	private Class<?> modeClass;
 

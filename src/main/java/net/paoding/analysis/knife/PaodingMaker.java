@@ -117,7 +117,7 @@ public class PaodingMaker {
 	 * 根据给定的属性对象获取一个Paoding对象．
 	 * <p>
 	 * 
-	 * @param properties
+	 * @param p
 	 * @return
 	 */
 	public static Paoding make(Properties p) {
