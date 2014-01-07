@@ -308,10 +308,10 @@ public class CJKKnife implements Knife, DictionariesWare {
 	/**
 	 * 对孤立字符串分词
 	 * 
-	 * @param cellector
+	 * @param collector
 	 * @param beef
 	 * @param offset
-	 * @param count
+	 * @param limit
 	 */
 	protected void dissectIsolated(Collector collector, Beef beef, int offset,
 			int limit) {

@@ -15,21 +15,20 @@
  */
 package net.paoding.analysis.analyzer;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.util.Iterator;
-
 import net.paoding.analysis.analyzer.impl.MostWordsTokenCollector;
 import net.paoding.analysis.knife.Beef;
 import net.paoding.analysis.knife.Collector;
 import net.paoding.analysis.knife.Knife;
 import net.paoding.analysis.knife.Paoding;
-
 import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
-import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
+import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.util.Iterator;
 
 /**
  * PaodingTokenizer是基于“庖丁解牛”框架的TokenStream实现，为PaodingAnalyzer使用。
@@ -45,7 +44,7 @@ import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
  * 
  * @see Collector
  * @see TokenCollector
- * @see MAxTokenCollector
+ * @see net.paoding.analysis.analyzer.impl.MaxWordLengthTokenCollector
  * @see MostWordsTokenCollector
  * 
  * @since 1.0
@@ -67,15 +66,15 @@ public final class PaodingTokenizer extends Tokenizer implements Collector {
 	/**
 	 * 接收来自{@link #input}的文本字符
 	 * 
-	 * @see #next()
+	 * @see #incrementToken()
 	 */
-	private final char[] buffer = new char[bufferLength];
+	protected final char[] buffer = new char[bufferLength];
 
 	/**
-	 * {@link buffer}[0]在{@link #input}中的偏移
+	 * {@link #buffer}[0]在{@link #input}中的偏移
 	 * 
 	 * @see #collect(String, int, int)
-	 * @see #next()
+	 * @see #incrementToken()
 	 */
 	private int offset;
 
@@ -92,7 +91,7 @@ public final class PaodingTokenizer extends Tokenizer implements Collector {
 	/**
 	 * 用于分解beef中的文本字符，由PaodingAnalyzer提供
 	 * 
-	 * @see #next()
+	 * @see #incrementToken()
 	 */
 	private Knife knife;
 
@@ -104,14 +103,17 @@ public final class PaodingTokenizer extends Tokenizer implements Collector {
 	/**
 	 * tokens迭代器，用于next()方法顺序读取tokens中的Token对象
 	 * 
-	 * @see #tokens
-	 * @see #next()
+	 * @see #tokenCollector
+	 * @see #incrementToken()
 	 */
 	private Iterator<Token> tokenIteractor;
 
+
+
 	private CharTermAttribute termAtt;
 	private OffsetAttribute offsetAtt;
-	private TypeAttribute typeAtt;
+    private PositionIncrementAttribute positionIncrementAttribute;
+	//private TypeAttribute typeAtt;
 
 	// -------------------------------------------------
 
@@ -134,7 +136,8 @@ public final class PaodingTokenizer extends Tokenizer implements Collector {
 	private void init() {
 		termAtt = addAttribute(CharTermAttribute.class);
 		offsetAtt = addAttribute(OffsetAttribute.class);
-		typeAtt = addAttribute(TypeAttribute.class);
+        positionIncrementAttribute = addAttribute(PositionIncrementAttribute.class);
+		//typeAtt = addAttribute(TypeAttribute.class);
 	}
 
 	// -------------------------------------------------
@@ -191,18 +194,21 @@ public final class PaodingTokenizer extends Tokenizer implements Collector {
 				// offset -= remainning;
 				dissected = 0;
 			}
-			dissected = knife.dissect((Collector) this, beef, dissected);
+			dissected = knife.dissect(this, beef, dissected);
 			// offset += read;// !!!
 			tokenIteractor = tokenCollector.iterator();
 		}
-		// 返回tokensIteractor下一个Token对象
-		Token token = tokenIteractor.next();
-		termAtt.setEmpty();
-		termAtt.append(token);
-		offsetAtt.setOffset(correctOffset(token.startOffset()),
-				correctOffset(token.endOffset()));
-		typeAtt.setType("paoding");
-		return true;
+
+        if(tokenIteractor.hasNext()) {
+            // 返回tokensIteractor下一个Token对象
+            Token token = tokenIteractor.next();
+            termAtt.setEmpty();
+            termAtt.append(token);
+            positionIncrementAttribute.setPositionIncrement(token.endOffset());
+            offsetAtt.setOffset(correctOffset(token.startOffset()),
+                    correctOffset(token.endOffset()));
+        }
+		return tokenIteractor.hasNext();
 	}
 
 	@Override

@@ -101,7 +101,7 @@ public class PaodingAnalyzer extends PaodingAnalyzerBean {
 
 	/**
 	 * @param knife
-	 * @param default_mode
+	 * @param mode default_mode
 	 * @deprecated
 	 */
 	public PaodingAnalyzer(Knife knife, int mode) {

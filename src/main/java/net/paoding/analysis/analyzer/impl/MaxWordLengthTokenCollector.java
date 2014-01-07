@@ -42,7 +42,11 @@ public class MaxWordLengthTokenCollector implements TokenCollector {
 
 	private Token last;
 
-	public Iterator<Token> iterator() {
+
+    public MaxWordLengthTokenCollector() {
+    }
+
+    public Iterator<Token> iterator() {
 		if (candidate != null) {
 			this.tokens.add(candidate);
 			candidate = null;
