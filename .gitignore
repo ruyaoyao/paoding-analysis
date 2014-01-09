@@ -2,7 +2,6 @@
 .project
 .classpath
 *.iml
-*.jar
 *.war
 *.ear
 
