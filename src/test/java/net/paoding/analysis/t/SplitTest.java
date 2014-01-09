@@ -48,7 +48,7 @@ public class SplitTest {
     @Test
     public void testParse() throws Exception {
         Query query = new QueryParser(Version.LUCENE_46,
-                "title", ANALYZER).parse("title:汉文化");
+                "title", ANALYZER).parse("title:你吃饭被撑死了吗");
 
         System.out.println(query);
     }

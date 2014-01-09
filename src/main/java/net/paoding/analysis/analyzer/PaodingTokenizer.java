@@ -217,5 +217,6 @@ public final class PaodingTokenizer extends Tokenizer implements Collector {
 		super.reset();
 		offset = 0;
 		inputLength = 0;
+        tokenIteractor = null;
 	}
 }
