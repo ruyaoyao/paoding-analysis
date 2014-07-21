@@ -1,3 +1,9 @@
+#Paoding分詞器，基於Lucene4.x
+
+修正了Lucene 4.9版本中已經移除的方法，重新編譯使其可以在4.9版正確載入執行。
+
+原作者： http://git.oschina.net/zhzhenqin/paoding-analysis 
+
 #Paoding分词器基于Lucene4.x
 
 原项目见 https://code.google.com/p/paoding/
