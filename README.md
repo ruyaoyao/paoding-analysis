@@ -2,6 +2,7 @@
 
 修正了Lucene 4.9版本中已經移除的方法(見http://goo.gl/qg4aKJ)
 並重新編譯使其可以在4.9版正確載入執行。
+注意！Lucene 4.9只支援 Java 7u55以上版本，包含Java 8，若要使用於4.7以下版本則需要重新使用Java 6編譯成jar檔方可使用。否則將會出現錯誤。
 
 原作者： http://git.oschina.net/zhzhenqin/paoding-analysis 
 
